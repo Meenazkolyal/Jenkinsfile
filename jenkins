@@ -1,1 +1,33 @@
+pipeline {
+    agent any  // Run pipeline on any available agent
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                sh 'mvn clean install' // Example for Java Maven project
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'mvn test' // Running test cases
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                sh 'scp target/app.jar user@server:/deploy/path'
+            }
+        }
+    }
+}
 
